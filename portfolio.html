@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asilbek Irgashaliyev — Java Backend Developer</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Cabinet+Grotesk:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#050508;
+  --s1:#0d0d14;
+  --s2:#12121c;
+  --card:#1a1a24;
+  --border:rgba(255,255,255,0.06);
+  --g:#39ff7e;
+  --g2:#7c6fff;
+  --g3:#ff6b6b;
+  --text:#eeeef5;
+  --muted:#4a4a6a;
+  --mono:'Space Mono',monospace;
+  --display:'Cabinet Grotesk',sans-serif;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--display);overflow-x:hidden;cursor:none}
+
+.cursor{position:fixed;width:8px;height:8px;background:var(--g);border-radius:50%;pointer-events:none;z-index:9999;transition:transform .1s;mix-blend-mode:difference}
+.cursor-ring{position:fixed;width:36px;height:36px;border:1px solid rgba(57,255,126,0.4);border-radius:50%;pointer-events:none;z-index:9998;transition:all .15s ease}
+
+body::before{
+  content:'';position:fixed;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.035'/%3E%3C/svg%3E");
+  pointer-events:none;z-index:9990;opacity:.4;
+}
+
+.orb{position:fixed;border-radius:50%;pointer-events:none;z-index:0;filter:blur(80px);opacity:.18}
+.orb1{width:500px;height:500px;background:#39ff7e;top:-100px;right:-100px}
+.orb2{width:400px;height:400px;background:#7c6fff;bottom:-50px;left:-80px}
+.orb3{width:300px;height:300px;background:#ff6b6b;top:50%;left:50%;transform:translate(-50%,-50%)}
+
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1.25rem 3rem;
+  background:rgba(5,5,8,0.7);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{font-family:var(--mono);font-size:13px;color:var(--g);letter-spacing:3px}
+.nav-logo::before{content:'> ';opacity:.5}
+.nav-links{display:flex;gap:2.5rem;align-items:center}
+.nav-links a{font-family:var(--mono);font-size:11px;color:var(--muted);text-decoration:none;letter-spacing:2px;text-transform:uppercase;transition:color .25s;position:relative}
+.nav-links a::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:1px;background:var(--g);transform:scaleX(0);transition:transform .25s}
+.nav-links a:hover{color:var(--text)}
+.nav-links a:hover::after{transform:scaleX(1)}
+.nav-dot{width:6px;height:6px;background:var(--g);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+
+.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;align-items:center;padding:7rem 3rem 4rem;position:relative;gap:3rem}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;color:var(--g);border:1px solid rgba(57,255,126,0.2);background:rgba(57,255,126,0.04);padding:6px 14px;border-radius:2px;margin-bottom:2rem;animation:slideIn .8s ease both;letter-spacing:2px}
+.hero-badge span{width:6px;height:6px;background:var(--g);border-radius:50%;animation:pulse 1.5s infinite}
+.hero-name{font-size:clamp(3.5rem,7vw,7rem);font-weight:800;line-height:1;letter-spacing:-3px;animation:slideIn .8s .1s ease both}
+.hero-name .line2{display:block;background:linear-gradient(135deg,var(--g),var(--g2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-desc{font-family:var(--mono);font-size:13px;color:var(--muted);margin-top:1.5rem;line-height:2;max-width:420px;animation:slideIn .8s .2s ease both}
+.hero-desc em{color:var(--g);font-style:normal}
+.hero-btns{display:flex;gap:1rem;margin-top:2.5rem;animation:slideIn .8s .3s ease both}
+.btn{padding:13px 30px;font-family:var(--mono);font-size:12px;letter-spacing:2px;text-transform:uppercase;cursor:pointer;text-decoration:none;border-radius:2px;transition:all .25s;display:inline-flex;align-items:center;gap:8px}
+.btn-g{background:var(--g);color:#050508;border:none;font-weight:700}
+.btn-g:hover{background:#86efac;transform:translateY(-2px)}
+.btn-g:hover .arr{transform:translateX(4px)}
+.btn-o{background:transparent;color:var(--text);border:1px solid var(--border)}
+.btn-o:hover{border-color:rgba(255,255,255,0.25);background:rgba(255,255,255,0.04)}
+.arr{transition:transform .2s}
+.hero-right{animation:slideIn .8s .4s ease both}
+.terminal{background:var(--s1);border:1px solid var(--border);border-radius:8px;overflow:hidden;font-family:var(--mono)}
+.term-header{display:flex;align-items:center;gap:8px;padding:12px 16px;background:var(--s2);border-bottom:1px solid var(--border)}
+.dot{width:12px;height:12px;border-radius:50%}
+.dot-r{background:#ff5f57}.dot-y{background:#febc2e}.dot-g{background:#28c840}
+.term-title{font-size:11px;color:var(--muted);margin-left:auto;letter-spacing:1px}
+.term-body{padding:1.5rem}
+.term-line{font-size:13px;line-height:2;color:var(--muted)}
+.term-line .cmd{color:var(--g)}
+.term-line .str{color:#ff9d4e}
+.term-line .kw{color:var(--g2)}
+.term-line .cls{color:#79e8ff}
+.term-line .num{color:#ff6b6b}
+.term-line .cmt{color:#3a3a5c}
+.cursor-blink{display:inline-block;width:8px;height:15px;background:var(--g);animation:blink 1s step-end infinite;vertical-align:middle}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+.stats-bar{border-top:1px solid var(--border);padding:2rem 3rem;display:grid;grid-template-columns:repeat(4,1fr);position:relative;z-index:1}
+.stat{text-align:center;padding:1rem;position:relative}
+.stat::after{content:'';position:absolute;right:0;top:20%;height:60%;width:1px;background:var(--border)}
+.stat:last-child::after{display:none}
+.stat-num{font-size:2.5rem;font-weight:800;line-height:1;background:linear-gradient(135deg,var(--g),var(--g2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.stat-label{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:2px;margin-top:.3rem;text-transform:uppercase}
+
+.section{padding:6rem 3rem;max-width:1200px;margin:0 auto;position:relative;z-index:1}
+.sec-head{display:flex;align-items:center;gap:1rem;margin-bottom:3.5rem}
+.sec-num{font-family:var(--mono);font-size:11px;color:var(--g);letter-spacing:2px}
+.sec-title{font-size:2rem;font-weight:800;letter-spacing:-1px}
+.sec-line{flex:1;height:1px;background:linear-gradient(to right,var(--border),transparent)}
+
+.skills-wrap{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem}
+.skill-card{background:var(--s1);border:1px solid var(--border);border-radius:8px;padding:1.75rem;position:relative;overflow:hidden;transition:transform .3s,border-color .3s}
+.skill-card::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,transparent,rgba(57,255,126,0.03));opacity:0;transition:opacity .3s}
+.skill-card:hover{transform:translateY(-4px);border-color:rgba(57,255,126,0.2)}
+.skill-card:hover::before{opacity:1}
+.sk-icon{font-size:20px;margin-bottom:1rem}
+.sk-cat{font-family:var(--mono);font-size:10px;color:var(--g);letter-spacing:2px;margin-bottom:.75rem}
+.sk-tags{display:flex;flex-wrap:wrap;gap:8px}
+.sk-tag{font-family:var(--mono);font-size:11px;padding:5px 12px;border-radius:2px;background:rgba(255,255,255,0.04);border:1px solid var(--border);color:var(--muted);transition:all .2s}
+.sk-tag:hover{color:var(--text);border-color:rgba(255,255,255,0.2)}
+.sk-tag.hot{background:rgba(57,255,126,0.08);border-color:rgba(57,255,126,0.2);color:var(--g)}
+
+.proj-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:1.5rem}
+.proj-card{background:var(--s1);border:1px solid var(--border);border-radius:8px;padding:2rem;position:relative;overflow:hidden;transition:transform .3s,border-color .3s}
+.proj-card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(to right,var(--g),var(--g2));transform:scaleX(0);transform-origin:left;transition:transform .4s}
+.proj-card:hover{transform:translateY(-5px);border-color:rgba(255,255,255,0.12)}
+.proj-card:hover::after{transform:scaleX(1)}
+.proj-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem}
+.proj-year{font-family:var(--mono);font-size:10px;color:var(--muted);letter-spacing:2px;background:var(--s2);padding:4px 10px;border-radius:2px;border:1px solid var(--border)}
+.proj-arrow{font-size:20px;color:var(--muted);transition:all .3s}
+.proj-card:hover .proj-arrow{color:var(--g);transform:translate(3px,-3px)}
+.proj-num-bg{position:absolute;bottom:-1rem;right:1rem;font-size:6rem;font-weight:800;color:rgba(255,255,255,0.025);line-height:1;pointer-events:none;font-family:var(--mono)}
+.proj-name{font-size:1.15rem;font-weight:700;margin-bottom:.6rem;letter-spacing:-.3px}
+.proj-desc{font-size:13px;color:var(--muted);line-height:1.8}
+.proj-techs{display:flex;flex-wrap:wrap;gap:6px;margin-top:1.25rem}
+.proj-tech{font-family:var(--mono);font-size:10px;padding:3px 10px;border-radius:2px;background:rgba(124,111,255,0.08);border:1px solid rgba(124,111,255,0.2);color:#a5a0ff}
+
+.timeline{position:relative;padding-left:2rem}
+.timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,var(--g),var(--g2),transparent)}
+.tl-item{position:relative;padding:0 0 2.5rem 2.5rem}
+.tl-dot{position:absolute;left:-6px;top:6px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--g)}
+.tl-date{font-family:var(--mono);font-size:10px;color:var(--g);letter-spacing:2px;margin-bottom:.4rem}
+.tl-title{font-size:1rem;font-weight:700;margin-bottom:.3rem}
+.tl-text{font-size:13px;color:var(--muted);line-height:1.7}
+
+.ach-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem}
+.ach-card{background:var(--s1);border:1px solid var(--border);border-radius:8px;padding:1.5rem;display:flex;flex-direction:column;gap:.5rem;transition:all .3s;position:relative;overflow:hidden}
+.ach-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .3s}
+.ach-card.nasa::before{background:radial-gradient(circle at top right,rgba(57,255,126,0.06),transparent)}
+.ach-card.paynet::before{background:radial-gradient(circle at top right,rgba(124,111,255,0.06),transparent)}
+.ach-card.leet::before{background:radial-gradient(circle at top right,rgba(255,107,107,0.06),transparent)}
+.ach-card.edu::before{background:radial-gradient(circle at top right,rgba(255,157,78,0.06),transparent)}
+.ach-card:hover{transform:translateY(-3px);border-color:rgba(255,255,255,0.12)}
+.ach-card:hover::before{opacity:1}
+.ach-ico{font-size:24px}
+.ach-ttl{font-size:15px;font-weight:700}
+.ach-txt{font-size:12px;color:var(--muted);line-height:1.6}
+
+.contact-hero{text-align:center;padding:5rem 3rem;background:var(--s1);border:1px solid var(--border);border-radius:12px;position:relative;overflow:hidden;margin-bottom:2rem}
+.contact-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(57,255,126,0.04) 0%,transparent 70%)}
+.contact-hero h2{font-size:clamp(2rem,5vw,4rem);font-weight:800;letter-spacing:-2px;margin-bottom:1rem}
+.contact-hero h2 span{background:linear-gradient(135deg,var(--g),var(--g2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.contact-hero p{font-family:var(--mono);font-size:13px;color:var(--muted);margin-bottom:2.5rem}
+.contact-links{display:flex;justify-content:center;flex-wrap:wrap;gap:1rem}
+.clink{display:flex;align-items:center;gap:10px;padding:12px 24px;border:1px solid var(--border);border-radius:4px;text-decoration:none;color:var(--text);font-family:var(--mono);font-size:12px;letter-spacing:1px;background:var(--bg);transition:all .3s}
+.clink:hover{border-color:rgba(57,255,126,0.3);color:var(--g);transform:translateY(-2px)}
+.clink-icon{font-size:16px}
+
+footer{border-top:1px solid var(--border);padding:2rem 3rem;display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1}
+.foot-left{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.foot-right{font-family:var(--mono);font-size:11px;color:var(--muted)}
+.foot-right span{color:var(--g)}
+
+.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:none}
+@keyframes slideIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
+::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,0.15)}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="orb orb1"></div>
+<div class="orb orb2"></div>
+<div class="orb orb3"></div>
+
+<nav>
+  <div class="nav-logo">ASILBEK.DEV</div>
+  <div class="nav-links">
+    <div class="nav-dot"></div>
+    <a href="#skills">Skills</a>
+    <a href="#projects">Projects</a>
+    <a href="#experience">Experience</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-badge"><span></span>Available for opportunities</div>
+    <h1 class="hero-name">Asilbek<br><span class="line2">Irgashaliyev</span></h1>
+    <p class="hero-desc">Java Backend Developer · <em>1 year exp</em><br>Spring Boot · PostgreSQL · Docker<br><em>100+</em> LeetCode problems · Tashkent 🇺🇿</p>
+    <div class="hero-btns">
+      <a href="#projects" class="btn btn-g">View Work <span class="arr">→</span></a>
+      <a href="#contact" class="btn btn-o">Contact Me</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="terminal">
+      <div class="term-header">
+        <div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div>
+        <span class="term-title">profile.java</span>
+      </div>
+      <div class="term-body">
+        <div class="term-line"><span class="cmt">// Java Backend Developer</span></div>
+        <div class="term-line"><span class="kw">public class</span> <span class="cls">Asilbek</span> {</div>
+        <div class="term-line">&nbsp;&nbsp;<span class="kw">String</span> role = <span class="str">"Backend Dev"</span>;</div>
+        <div class="term-line">&nbsp;&nbsp;<span class="kw">String</span> location = <span class="str">"Tashkent, UZ"</span>;</div>
+        <div class="term-line">&nbsp;&nbsp;<span class="kw">int</span> leetcode = <span class="num">100</span>;</div>
+        <div class="term-line">&nbsp;&nbsp;</div>
+        <div class="term-line">&nbsp;&nbsp;<span class="kw">List</span>&lt;<span class="cls">String</span>&gt; stack = <span class="cmd">Arrays</span>.asList(</div>
+        <div class="term-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"Spring Boot"</span>, <span class="str">"PostgreSQL"</span>,</div>
+        <div class="term-line">&nbsp;&nbsp;&nbsp;&nbsp;<span class="str">"Docker"</span>, <span class="str">"JavaFX"</span></div>
+        <div class="term-line">&nbsp;&nbsp;);</div>
+        <div class="term-line">}</div>
+        <div class="term-line"><span class="cursor-blink"></span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="stats-bar">
+  <div class="stat"><div class="stat-num">1+</div><div class="stat-label">Years Exp</div></div>
+  <div class="stat"><div class="stat-num">5+</div><div class="stat-label">Projects</div></div>
+  <div class="stat"><div class="stat-num">100+</div><div class="stat-label">LeetCode</div></div>
+  <div class="stat"><div class="stat-num">2</div><div class="stat-label">Hackathons</div></div>
+</div>
+
+<section class="section" id="skills">
+  <div class="sec-head reveal"><span class="sec-num">01 —</span><h2 class="sec-title">Technical Skills</h2><div class="sec-line"></div></div>
+  <div class="skills-wrap">
+    <div class="skill-card reveal"><div class="sk-icon">☕</div><div class="sk-cat">Languages</div><div class="sk-tags"><span class="sk-tag hot">Java</span><span class="sk-tag hot">SQL</span><span class="sk-tag">C++</span><span class="sk-tag">Android</span></div></div>
+    <div class="skill-card reveal"><div class="sk-icon">🌱</div><div class="sk-cat">Frameworks</div><div class="sk-tags"><span class="sk-tag hot">Spring Boot</span><span class="sk-tag hot">Spring</span><span class="sk-tag">JavaFX</span></div></div>
+    <div class="skill-card reveal"><div class="sk-icon">🗄️</div><div class="sk-cat">Databases</div><div class="sk-tags"><span class="sk-tag hot">PostgreSQL</span><span class="sk-tag">SQLite</span></div></div>
+    <div class="skill-card reveal"><div class="sk-icon">🛠️</div><div class="sk-cat">DevOps & Tools</div><div class="sk-tags"><span class="sk-tag hot">Git</span><span class="sk-tag">GitHub</span><span class="sk-tag">GitLab</span><span class="sk-tag">Docker</span></div></div>
+  </div>
+</section>
+
+<section class="section" id="projects">
+  <div class="sec-head reveal"><span class="sec-num">02 —</span><h2 class="sec-title">Projects</h2><div class="sec-line"></div></div>
+  <div class="proj-grid">
+    <div class="proj-card reveal"><div class="proj-top"><span class="proj-year">2024</span><span class="proj-arrow">↗</span></div><div class="proj-name">Uzum Clone & Telegram Bot</div><div class="proj-desc">E-commerce va bot xizmatlari uchun yuqori samarali backend. Async ishlov berish va task scheduling orqali API tezligi oshirildi.</div><div class="proj-techs"><span class="proj-tech">Java</span><span class="proj-tech">Spring Boot</span><span class="proj-tech">PostgreSQL</span></div><div class="proj-num-bg">01</div></div>
+    <div class="proj-card reveal"><div class="proj-top"><span class="proj-year">2025</span><span class="proj-arrow">↗</span></div><div class="proj-name">Iviru & Minios Desktop</div><div class="proj-desc">JavaFX yordamida qurilgan ko'p funksiyali desktop ilovalar. UI dizayndan backend logikagacha to'liq ishlab chiqildi.</div><div class="proj-techs"><span class="proj-tech">JavaFX</span><span class="proj-tech">Java</span></div><div class="proj-num-bg">02</div></div>
+    <div class="proj-card reveal"><div class="proj-top"><span class="proj-year">2026 — hozir</span><span class="proj-arrow">↗</span></div><div class="proj-name">EduPlatform System</div><div class="proj-desc">Onlayn test platformasi: autentifikatsiya, natijalar tahlili, MCQ / True-False / ochiq savollar.</div><div class="proj-techs"><span class="proj-tech">Java</span><span class="proj-tech">Spring Boot</span><span class="proj-tech">PostgreSQL</span></div><div class="proj-num-bg">03</div></div>
+    <div class="proj-card reveal"><div class="proj-top"><span class="proj-year">2026 — hozir</span><span class="proj-arrow">↗</span></div><div class="proj-name">Todo Mobile App</div><div class="proj-desc">Foydalanuvchilarga qulay interfeys va mahalliy saqlash bilan vazifa boshqaruv ilovasi. CRUD + clean architecture.</div><div class="proj-techs"><span class="proj-tech">Android</span><span class="proj-tech">Java</span><span class="proj-tech">SQLite</span></div><div class="proj-num-bg">04</div></div>
+    <div class="proj-card reveal"><div class="proj-top"><span class="proj-year">2026 — hozir</span><span class="proj-arrow">↗</span></div><div class="proj-name">Student Rating System</div><div class="proj-desc">Talabalar akademik natijalarini kuzatish va baholash. Reyting logikasi va kengaytiriladigan backend arxitekturasi.</div><div class="proj-techs"><span class="proj-tech">Java</span><span class="proj-tech">Spring Boot</span><span class="proj-tech">PostgreSQL</span></div><div class="proj-num-bg">05</div></div>
+  </div>
+</section>
+
+<section class="section" id="experience">
+  <div class="sec-head reveal"><span class="sec-num">03 —</span><h2 class="sec-title">Experience & Education</h2><div class="sec-line"></div></div>
+  <div class="timeline reveal">
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-date">2023 — 2026</div><div class="tl-title">B.S. Software Engineering — TUIT</div><div class="tl-text">Toshkent axborot texnologiyalari universiteti. Java Backend ixtisoslashuvi.</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-date">2024</div><div class="tl-title">Data Entry Agent — Moomkin.uz</div><div class="tl-text">Kompaniya ma'lumotlar bazasiga ma'lumotlarni kiritish va yangilash.</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-date">2024</div><div class="tl-title">NASA Space Apps Challenge</div><div class="tl-text">Xalqaro hackathon ishtirokchisi.</div></div>
+    <div class="tl-item"><div class="tl-dot"></div><div class="tl-date">2024</div><div class="tl-title">Paynet Hackathon</div><div class="tl-text">Moliyaviy texnologiya sohasidagi hackathon ishtirokchisi.</div></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="sec-head reveal"><span class="sec-num">04 —</span><h2 class="sec-title">Achievements</h2><div class="sec-line"></div></div>
+  <div class="ach-grid">
+    <div class="ach-card nasa reveal"><div class="ach-ico">🚀</div><div class="ach-ttl">NASA Space Apps</div><div class="ach-txt">Xalqaro hackathon ishtirokchisi</div></div>
+    <div class="ach-card paynet reveal"><div class="ach-ico">💳</div><div class="ach-ttl">Paynet Hackathon</div><div class="ach-txt">Fintech sohasidagi tanlov</div></div>
+    <div class="ach-card leet reveal"><div class="ach-ico">🧩</div><div class="ach-ttl">100+ LeetCode</div><div class="ach-txt">Algoritmik masalalar yechimi</div></div>
+    <div class="ach-card edu reveal"><div class="ach-ico">🎓</div><div class="ach-ttl">TUIT 2026</div><div class="ach-txt">Software Engineering bitiruvchisi</div></div>
+  </div>
+</section>
+
+<section class="section" id="contact">
+  <div class="sec-head reveal"><span class="sec-num">05 —</span><h2 class="sec-title">Get In Touch</h2><div class="sec-line"></div></div>
+  <div class="contact-hero reveal">
+    <h2>Let's <span>work together</span></h2>
+    <p>Open to backend roles, freelance projects & collaborations</p>
+    <div class="contact-links">
+      <a href="mailto:asilbekirgashaliyev42@gmail.com" class="clink"><span class="clink-icon">✉</span> Email</a>
+      <a href="https://github.com/as1lbekdev" class="clink"><span class="clink-icon">⌥</span> GitHub</a>
+      <a href="https://linkedin.com/in/as1lbekdev" class="clink"><span class="clink-icon">◈</span> LinkedIn</a>
+      <a href="tel:+998976792208" class="clink"><span class="clink-icon">◎</span> +998 97 679 22 08</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="foot-left">© 2026 Asilbek Irgashaliyev</div>
+  <div class="foot-right">Made with <span>♥</span> in Tashkent</div>
+</footer>
+
+<script>
+const cursor=document.getElementById('cursor');
+const ring=document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=(mx-4)+'px';cursor.style.top=(my-4)+'px'});
+function animRing(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=(rx-18)+'px';ring.style.top=(ry-18)+'px';requestAnimationFrame(animRing)}
+animRing();
+document.querySelectorAll('a,button,.proj-card,.skill-card,.ach-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cursor.style.transform='scale(2.5)';ring.style.transform='scale(1.5)';ring.style.borderColor='rgba(57,255,126,0.6)'});
+  el.addEventListener('mouseleave',()=>{cursor.style.transform='scale(1)';ring.style.transform='scale(1)';ring.style.borderColor='rgba(57,255,126,0.4)'});
+});
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+function animCount(el,target,suffix=''){let start=0;const dur=1500;const step=ts=>{if(!start)start=ts;const prog=Math.min((ts-start)/dur,1);const ease=1-Math.pow(1-prog,3);el.textContent=Math.round(ease*target)+(prog<1?'':suffix||'');if(prog<1)requestAnimationFrame(step);else el.textContent=target+suffix};requestAnimationFrame(step)}
+const statsObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){const nums=document.querySelectorAll('.stat-num');nums[0]&&animCount(nums[0],1,'+');nums[1]&&animCount(nums[1],5,'+');nums[2]&&animCount(nums[2],100,'+');nums[3]&&animCount(nums[3],2,'');statsObs.disconnect()}})},{threshold:.5});
+const sb=document.querySelector('.stats-bar');if(sb)statsObs.observe(sb);
+</script>
+</body>
+</html>
